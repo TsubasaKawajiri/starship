@@ -15,6 +15,7 @@ pub fn module<'a>(context: &'a Context) -> Option<Module<'a>> {
 
     let mut module = context.new_module("battery")?;
     let battery_threshold = module.config_value_f64("threshold").unwrap_or(BATTERY_THRESHOLD) as f32;
+    let show_cycle = module.config_value_bool("show_cycle").unwrap_or(false);
 
     if percentage > battery_threshold {
         log::debug!(
@@ -45,12 +46,15 @@ pub fn module<'a>(context: &'a Context) -> Option<Module<'a>> {
         _ => return None,
     }
 
-    let mut percent_string = Vec::<String>::with_capacity(4);
+    let mut percent_string = Vec::<String>::with_capacity(5);
     // Round the percentage to a whole number
     percent_string.push(percentage.round().to_string());
-    percent_string.push("%% ♻️  ".to_string());
-    percent_string.push(cycle.to_string());
-    percent_string.push("cycles".to_string());
+    percent_string.push("%%".to_string());
+    if show_cycle {
+        percent_string.push(" ♻️  ".to_string());
+        percent_string.push(cycle.to_string());
+        percent_string.push("cycles".to_string());
+    }
     module.new_segment("percentage", percent_string.join("").as_ref());
 
     Some(module)
