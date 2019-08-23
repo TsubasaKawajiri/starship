@@ -131,6 +131,11 @@ impl<'a> Module<'a> {
         self.config.and_then(|config| config.get_as_i64(key))
     }
 
+    /// Get a module's config value as an float
+    pub fn config_value_f64(&self, key: &str) -> Option<f64> {
+        self.config.and_then(|config| config.get_as_f64(key))
+    }
+
     /// Get a module's config value as a bool
     pub fn config_value_bool(&self, key: &str) -> Option<bool> {
         self.config.and_then(|config| config.get_as_bool(key))

@@ -13,6 +13,7 @@ pub trait Config {
     fn get_as_bool(&self, key: &str) -> Option<bool>;
     fn get_as_str(&self, key: &str) -> Option<&str>;
     fn get_as_i64(&self, key: &str) -> Option<i64>;
+    fn get_as_f64(&self, key: &str) -> Option<f64>;
     fn get_as_array(&self, key: &str) -> Option<&Vec<toml::value::Value>>;
 
     // Internal implementation for accessors
@@ -141,6 +142,23 @@ impl Config for Table {
         }
 
         i64_value
+    }
+
+    /// Get a key from a module's configuration as an float
+    fn get_as_f64(&self, key: &str) -> Option<f64> {
+        let value = self.get_config(key)?;
+        let f64_value = value.as_float();
+
+        if f64_value.is_none() {
+            log::debug!(
+                "Expected \"{}\" to be an integer. Instead received {} of type {}.",
+                key,
+                value,
+                value.type_str()
+            );
+        }
+
+        f64_value
     }
 
     /// Get a key from a module's configuration as a vector
