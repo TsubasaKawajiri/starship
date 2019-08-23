@@ -7,22 +7,25 @@ pub fn module<'a>(context: &'a Context) -> Option<Module<'a>> {
     const BATTERY_FULL: &str = "•";
     const BATTERY_CHARGING: &str = "⇡";
     const BATTERY_DISCHARGING: &str = "⇣";
-    const BATTERY_THRESHOLD: f32 = 10.0;
+    const BATTERY_UNKNOWN: &str = "?";
+    const BATTERY_THRESHOLD: f64 = 100.0;
 
     let battery_status = get_battery_status()?;
-    let BatteryStatus { state, percentage } = battery_status;
+    let BatteryStatus { state, percentage, cycle } = battery_status;
 
-    if percentage > BATTERY_THRESHOLD {
+    let mut module = context.new_module("battery")?;
+    let battery_threshold = module.config_value_f64("threshold").unwrap_or(BATTERY_THRESHOLD) as f32;
+
+    if percentage > battery_threshold {
         log::debug!(
             "Battery percentage is higher than threshold ({} > {})",
             percentage,
-            BATTERY_THRESHOLD
+            battery_threshold
         );
         return None;
     }
 
     // TODO: Set style based on percentage when threshold is modifiable
-    let mut module = context.new_module("battery")?;
     module.set_style(Color::Red.bold());
     module.get_prefix().set_value("");
 
@@ -36,13 +39,18 @@ pub fn module<'a>(context: &'a Context) -> Option<Module<'a>> {
         battery::State::Discharging => {
             module.new_segment("discharging_symbol", BATTERY_DISCHARGING);
         }
+        battery::State::Unknown => {
+            module.new_segment("unknown_symbol", BATTERY_UNKNOWN);
+        }
         _ => return None,
     }
 
-    let mut percent_string = Vec::<String>::with_capacity(2);
+    let mut percent_string = Vec::<String>::with_capacity(4);
     // Round the percentage to a whole number
     percent_string.push(percentage.round().to_string());
-    percent_string.push("%%".to_string());
+    percent_string.push("%% ♻️  ".to_string());
+    percent_string.push(cycle.to_string());
+    percent_string.push("cycles".to_string());
     module.new_segment("percentage", percent_string.join("").as_ref());
 
     Some(module)
@@ -55,6 +63,7 @@ fn get_battery_status() -> Option<BatteryStatus> {
             log::debug!("Battery found: {:?}", battery);
             let battery_status = BatteryStatus {
                 percentage: battery.state_of_charge().value * 100.0,
+                cycle: battery.cycle_count().unwrap(),
                 state: battery.state(),
             };
 
@@ -73,5 +82,6 @@ fn get_battery_status() -> Option<BatteryStatus> {
 
 struct BatteryStatus {
     percentage: f32,
+    cycle: u32,
     state: battery::State,
 }
