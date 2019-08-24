@@ -29,6 +29,7 @@ show_cylce = false  // true or false
 
 [datetime]
 disable = false     // true or false
+format = "%Y/%m/%d" // year:%Y, month:%m, day:%d, hour:%H, minute:%M, second:%S, timezone:%Z
 ```
   
 
