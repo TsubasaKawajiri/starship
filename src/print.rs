@@ -23,6 +23,7 @@ const DEFAULT_PROMPT_ORDER: &[&str] = &[
     "python",
     "golang",
     "cmd_duration",
+    "datetime",
     "line_break",
     "jobs",
     "battery",

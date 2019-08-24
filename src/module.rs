@@ -21,6 +21,7 @@ pub const ALL_MODULES: &[&str] = &[
     "ruby",
     "rust",
     "username",
+    "datetime",
 ];
 
 /// A module is a collection of segments showing data for a single integration
