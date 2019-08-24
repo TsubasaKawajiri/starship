@@ -21,6 +21,16 @@
 - modify battery module.
   - configurable display threshold, display battery cycles.
   
+## 📚Additional Configures
+```
+[battery]
+threshold = 10.0    // 0.0 ~ 100.0
+show_cylce = false  // true or false
+
+[datetime]
+disable = false     // true or false
+```
+  
 
 ## 🚀
 thank you starship.
