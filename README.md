@@ -17,9 +17,11 @@
 ## 📄Changes from base Starship
 - Add datetime module.
   - display local datetime.
+  - configurable display format.
   
 - modify battery module.
-  - configurable display threshold, display battery cycles.
+  - configurable display threshold.
+  - display battery cycles.
   
 ## 📚Additional Configures
 ```
