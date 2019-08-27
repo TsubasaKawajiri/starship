@@ -178,13 +178,22 @@ The `directory` module shows the path to your current directory, truncated to
 three parent folders. Your directory will also be truncated to the root of the
 git repo that you're currently in.
 
+When using the fish style pwd option, instead of hiding the path that is
+truncated, you will see a shortened name of each directory based on the number
+you enable for the option.
+
+For example, given `~/Dev/Nix/nixpkgs/pkgs` where `nixpkgs` is the repo root,
+and the option set to `1`. You will now see `~/D/N/nixpkgs/pkgs`, whereas before
+it would have been `nixpkgs/pkgs`.
+
 ### Options
 
 | Variable            | Default | Description                                                                      |
 | ------------------- | ------- | -------------------------------------------------------------------------------- |
-| `truncation_length` | `3`     | The number of parent folders that the current directory should be truncated to.  |
-| `truncate_to_repo`  | `true`  | Whether or not to truncate to the root of the git repo that you're currently in. |
-| `disabled`          | `false` | Disables the `directory` module.                                                 |
+| `truncation_length`         | `3`     | The number of parent folders that the current directory should be truncated to.     |
+| `truncate_to_repo`          | `true`  | Whether or not to truncate to the root of the git repo that you're currently in. |
+| `disabled`                  | `false` | Disables the `directory` module.                                                    |
+| `fish_style_pwd_dir_length` | `0`     | The number of characters to use when applying fish shell pwd path logic.          |
 
 ### Example
 
@@ -489,4 +498,30 @@ The module will be shown if any of the following conditions are met:
 
 [username]
 disabled = true
+```
+
+## Nix-shell
+
+The `nix_shell` module shows the nix-shell environment.
+The module will be shown when inside a nix-shell environment.
+
+### Options
+
+| Variable     | Default  | Description                        |
+| ------------ | -------- | ---------------------------------- |
+| `disabled`   | `false`  | Disables the `username` module.    |
+| `use_name`   | `false`  | Display the name of the nix-shell. |
+| `impure_msg` | `impure` | Customize the "impure" msg.        |
+| `pure_msg`   | `pure`   | Customize the "pure" msg.          |
+
+### Example
+
+```toml
+# ~/.config/starship.toml
+
+[nix_shell]
+disabled = true
+use_name = true
+impure_msg = "impure shell"
+pure_msg = "pure shell"
 ```

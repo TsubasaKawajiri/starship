@@ -1,5 +1,4 @@
 // While adding out new module add out module to src/module.rs ALL_MODULES const array also.
-mod battery;
 mod character;
 mod cmd_duration;
 mod directory;
@@ -8,6 +7,7 @@ mod git_status;
 mod golang;
 mod jobs;
 mod line_break;
+mod nix_shell;
 mod nodejs;
 mod package;
 mod python;
@@ -15,6 +15,9 @@ mod ruby;
 mod rust;
 mod username;
 mod datetime;
+
+#[cfg(feature = "battery")]
+mod battery;
 
 use crate::context::Context;
 use crate::module::Module;
@@ -33,10 +36,12 @@ pub fn handle<'a>(module: &str, context: &'a Context) -> Option<Module<'a>> {
         "git_branch" => git_branch::module(context),
         "git_status" => git_status::module(context),
         "username" => username::module(context),
+        #[cfg(feature = "battery")]
         "battery" => battery::module(context),
         "cmd_duration" => cmd_duration::module(context),
         "jobs" => jobs::module(context),
         "datetime" => datetime::module(context),
+        "nix_shell" => nix_shell::module(context),
 
         _ => {
             eprintln!("Error: Unknown module {}. Use starship module --list to list out all supported modules.", module);

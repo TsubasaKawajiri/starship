@@ -22,10 +22,12 @@ const DEFAULT_PROMPT_ORDER: &[&str] = &[
     "rust",
     "python",
     "golang",
+    "nix_shell",
     "cmd_duration",
     "datetime",
     "line_break",
     "jobs",
+    #[cfg(feature = "battery")]
     "battery",
     "character",
 ];
