@@ -63,7 +63,9 @@ prompt_order=["rust","line_break","package","line_break","character"]
 ```
 
 ### Default prompt order
-The ```default_prompt_order``` configuration option is used to define the order in which modules are shown in the prompt, if empty or no ```prompt_order``` is provided. The default is as shown:
+
+The `default_prompt_order` configuration option is used to define the order in which modules are shown in the prompt, if empty or no `prompt_order` is provided. The default is as shown:
+
 ```
 default_prompt_order = [
     "username",
@@ -83,7 +85,6 @@ default_prompt_order = [
     "character",
 ]
 ```
-
 
 ## Battery
 
@@ -121,13 +122,13 @@ can do this in two ways: by changing color (red/green) or by changing its shape
 
 ### Options
 
-| Variable                | Default | Description                                                                       |
-| ----------------------- | ------- | --------------------------------------------------------------------------------- |
-| `symbol`                | `"❯"`   | The symbol used before the text input in the prompt.                              |
-| `error_symbol`          | `"✖"`   | The symbol used before text input if the previous command failed.                 |
-| `use_symbol_for_status` | `false` | Indicate error status by changing the symbol.                                     |
-| `vicmd_symbol`          | `"❮"`   | The symbol used before the text input in the prompt if zsh is in vim normal mode. |
-| `disabled`              | `false` | Disables the `character` module.                                                  |
+| Variable                | Default | Description                                                                         |
+| ----------------------- | ------- | ----------------------------------------------------------------------------------- |
+| `symbol`                | `"❯"`   | The symbol used before the text input in the prompt.                                |
+| `error_symbol`          | `"✖"`   | The symbol used before text input if the previous command failed.                   |
+| `use_symbol_for_status` | `false` | Indicate error status by changing the symbol.                                       |
+| `vicmd_symbol`          | `"❮"`   | The symbol used before the text input in the prompt if shell is in vim normal mode. |
+| `disabled`              | `false` | Disables the `character` module.                                                    |
 
 ### Example
 
@@ -188,12 +189,12 @@ it would have been `nixpkgs/pkgs`.
 
 ### Options
 
-| Variable            | Default | Description                                                                      |
-| ------------------- | ------- | -------------------------------------------------------------------------------- |
-| `truncation_length`         | `3`     | The number of parent folders that the current directory should be truncated to.     |
+| Variable                    | Default | Description                                                                      |
+| --------------------------- | ------- | -------------------------------------------------------------------------------- |
+| `truncation_length`         | `3`     | The number of parent folders that the current directory should be truncated to.  |
 | `truncate_to_repo`          | `true`  | Whether or not to truncate to the root of the git repo that you're currently in. |
-| `disabled`                  | `false` | Disables the `directory` module.                                                    |
-| `fish_style_pwd_dir_length` | `0`     | The number of characters to use when applying fish shell pwd path logic.          |
+| `disabled`                  | `false` | Disables the `directory` module.                                                 |
+| `fish_style_pwd_dir_length` | `0`     | The number of characters to use when applying fish shell pwd path logic.         |
 
 ### Example
 
@@ -301,10 +302,11 @@ more than the `threshold` config value, if it exists.
 
 ### Options
 
-| Variable    | Default | Description                      |
-| ----------- | ------- | -------------------------------- |
-| `threshold` | `1`     | Show number of jobs if exceeded. |
-| `disabled`  | `false` | Disables the `jobs` module.      |
+| Variable    | Default | Description                                           |
+| ----------- | ------- | ----------------------------------------------------- |
+| `symbol`    | `"✦ "`  | The symbol used before displaying the number of jobs. |
+| `threshold` | `1`     | Show number of jobs if exceeded.                      |
+| `disabled`  | `false` | Disables the `jobs` module.                           |
 
 ### Example
 
@@ -312,6 +314,7 @@ more than the `threshold` config value, if it exists.
 # ~/.config/starship.toml
 
 [jobs]
+symbol = "+ "
 threshold = 4
 ```
 
@@ -346,6 +349,7 @@ The module will be shown if any of the following conditions are met:
 
 | Variable   | Default | Description                 |
 | ---------- | ------- | --------------------------- |
+| `symbol`    | `"💎 "`  | The symbol used before displaying the version of Ruby. |
 | `disabled` | `false` | Disables the `ruby` module. |
 
 ### Example
@@ -354,7 +358,7 @@ The module will be shown if any of the following conditions are met:
 # ~/.config/starship.toml
 
 [ruby]
-disabled = false
+symbol = "🔺 "
 ```
 
 ## NodeJS
@@ -462,10 +466,10 @@ The module will be shown if any of the following conditions are met:
 
 ### Options
 
-| Variable   | Default | Description                                              |
-| ---------- | ------- | -------------------------------------------------------- |
+| Variable   | Default | Description                                            |
+| ---------- | ------- | ------------------------------------------------------ |
 | `symbol`   | `"🦀 "` | The symbol used before displaying the version of Rust. |
-| `disabled` | `false` | Disables the `rust` module.                              |
+| `disabled` | `false` | Disables the `rust` module.                            |
 
 ### Example
 
@@ -509,7 +513,7 @@ The module will be shown when inside a nix-shell environment.
 
 | Variable     | Default  | Description                        |
 | ------------ | -------- | ---------------------------------- |
-| `disabled`   | `false`  | Disables the `username` module.    |
+| `disabled`   | `false`  | Disables the `nix_shell` module.   |
 | `use_name`   | `false`  | Display the name of the nix-shell. |
 | `impure_msg` | `impure` | Customize the "impure" msg.        |
 | `pure_msg`   | `pure`   | Customize the "pure" msg.          |
